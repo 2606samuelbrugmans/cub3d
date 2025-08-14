@@ -150,5 +150,7 @@ void init_player(t_player *player, t_map *var);
 // [movements]
 void	ft_rotate(char direction, t_mlx *xvar);
 void	ft_move(char movement, t_mlx *xvar);
+//// textures
+void update_floor_and_ceiling(t_ray ray, t_mlx **xvar, int x);
 
 #endif

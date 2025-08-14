@@ -40,6 +40,7 @@ int ft_raycasting(t_mlx *xvar, t_ray ray)
         	update_texture(i, ray, &xvar->data->ea, &(xvar->img));
 		else if (tex == 4)
         	update_texture(i, ray, &xvar->data->so, &(xvar->img));
+        update_floor_and_ceiling(ray, &xvar, i);
         i++;
     }
     return (0);
