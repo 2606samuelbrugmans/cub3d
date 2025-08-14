@@ -126,7 +126,7 @@ void draw_vertical_line(t_ray *ray)
 		ray->line_height = HEIGHT - 1;
 	else 
 		ray->line_height = HEIGHT / ray->wall_dist;
-	if (ray->line_height > HEIGHT)
+	if (ray->line_height > HEIGHT || ray->line_height < 0)
 		ray->line_height = HEIGHT;
 	ray->wall_bottom = (HEIGHT - ray->line_height) / 2;
 	ray->wall_top = ray->wall_bottom + ray->line_height;
