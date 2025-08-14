@@ -104,7 +104,6 @@ int ft_game(t_map *var)
     init_player(&player, var);
 	xvar->player = player;
 	print_map(xvar->data->f_maps);
-	printf("Player initialized at x: %f, y: %f\n", xvar->player.x, xvar->player.y);
 	game_loop(xvar);
 	mlx_hook(xvar->mlx_win, 2, (1L << 0), key_hook, xvar);
     mlx_loop(xvar->mlx);
