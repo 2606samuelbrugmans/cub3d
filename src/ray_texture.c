@@ -45,7 +45,7 @@ void	update_texture(int x, t_ray ray,
 	double	tex_pos;
 	double	step;
 
-	tex_x = (int)(fmod(ray.wall, 1.0) * tex->width);
+	tex_x = (int)(ray.wall * tex->width);
 	if ((ray.side == 0 && ray.dirx > 0)
 		|| (ray.side == 1 && ray.diry < 0))
 		tex_x = tex->width - tex_x - 1;

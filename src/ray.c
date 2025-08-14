@@ -114,22 +114,23 @@ void dda(t_ray *ray, char **map)
 	printf("DDA: Map[%d][%d] = %c dirx %f dir y %f\n", ray->mapy, ray->mapx, map[ray->mapy][ray->mapx], ray->player_dirX, ray->player_dirY);
 	fflush(stdout);
 }
-void draw_vertical_line(t_ray *ray)
+void	draw_vertical_line(t_ray *ray)
 {
-	// Compute perpendicular wall distance first
 	if (ray->side == 0)
-		ray->wall_dist = (ray->mapx - ray->start_x + (1 - ray->stepx)/2) / ray->dirx;
+		ray->wall_dist = (ray->mapx - ray->start_x
+				+ (1 - ray->stepx) / 2) / ray->dirx;
 	else
-		ray->wall_dist = (ray->mapy - ray->start_y + (1 - ray->stepy)/2) / ray->diry;
-	ray->wall_dist = fabs(ray->wall_dist);
+		ray->wall_dist = (ray->mapy - ray->start_y
+				+ (1 - ray->stepy) / 2) / ray->diry;
 	if (ray->wall_dist <= 0)
-		ray->line_height = HEIGHT - 1;
-	else 
-		ray->line_height = HEIGHT / ray->wall_dist;
-	if (ray->line_height > HEIGHT || ray->line_height < 0)
-		ray->line_height = HEIGHT;
-	ray->wall_bottom = (HEIGHT - ray->line_height) / 2;
-	ray->wall_top = ray->wall_bottom + ray->line_height;
+		ray->wall_dist = 0.0001;
+	ray->line_height = (int)(HEIGHT / ray->wall_dist);
+	ray->wall_bottom = -ray->line_height / 2 + HEIGHT / 2;
+	if (ray->wall_bottom < 0)
+		ray->wall_bottom = 0;
+	ray->wall_top = ray->line_height / 2 + HEIGHT / 2;
+	if (ray->wall_top >= HEIGHT)
+		ray->wall_top = HEIGHT - 1;
 	if (ray->side == 0)
 		ray->wall = ray->start_y + ray->wall_dist * ray->diry;
 	else
