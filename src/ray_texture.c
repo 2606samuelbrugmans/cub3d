@@ -15,7 +15,7 @@ void update_floor_and_ceiling(t_ray ray, t_frame *frame, int x, t_txtrs *tex)
 	}
 
 	y = ray.wall_top;
-	while (y < HEIGHT)
+	while (y < HEIGHT - 1)
 	{
 		*(unsigned int *)(frame->addr + y * frame->size_line + x * (frame->bpp / 8)) = color;
 		y++;
@@ -55,6 +55,10 @@ void	update_texture(int x, t_ray ray,
 	printf("bottom=%d  top=%d\n", ray.wall_bottom, ray.wall_top);
 	while (y < ray.wall_top)
 	{
+		if (tex_pos < 0)
+			tex_pos = 0;
+		if (tex_pos >= tex->height)
+			tex_pos = tex->height - 1;
 		tex_y = ((int)tex_pos) % tex->height;
 		tex_pos += step;
 		ft_memcpy(frame->addr + y * frame->size_line + x * (frame->bpp / 8),
