@@ -33,18 +33,46 @@ void	ft_error_msg(char *msg, t_map *var)
 
 void	ft_free_mlx(t_mlx *xvar)
 {
+	if (!xvar)
+		return;
 	if (xvar->img.img)
+	{
 		mlx_destroy_image(xvar->mlx, xvar->img.img);
-	if (xvar->data->no.img)
-		mlx_destroy_image(xvar->mlx, xvar->data->no.img);
-	if (xvar->data->so.img)
-		mlx_destroy_image(xvar->mlx, xvar->data->so.img);
-	if (xvar->data->ea.img)
-		mlx_destroy_image(xvar->mlx, xvar->data->ea.img);
-	if (xvar->data->we.img)
-		mlx_destroy_image(xvar->mlx, xvar->data->we.img);
+		xvar->img.img = NULL;
+		xvar->img.addr = NULL;
+	}
+	if (xvar->data)
+	{
+		if (xvar->data->no.img)
+		{
+			mlx_destroy_image(xvar->mlx, xvar->data->no.img);
+			xvar->data->no.img = NULL;
+		}
+		if (xvar->data->so.img)
+		{
+			mlx_destroy_image(xvar->mlx, xvar->data->so.img);
+			xvar->data->so.img = NULL;
+		}
+		if (xvar->data->ea.img)
+		{
+			mlx_destroy_image(xvar->mlx, xvar->data->ea.img);
+			xvar->data->ea.img = NULL;
+		}
+		if (xvar->data->we.img)
+		{
+			mlx_destroy_image(xvar->mlx, xvar->data->we.img);
+			xvar->data->we.img = NULL;
+		}
+	}
 	if (xvar->mlx_win)
+	{
 		mlx_destroy_window(xvar->mlx, xvar->mlx_win);
-	mlx_destroy_display(xvar->mlx);
-	free(xvar->mlx);
+		xvar->mlx_win = NULL;
+	}
+	if (xvar->mlx)
+	{
+		mlx_destroy_display(xvar->mlx);
+		free(xvar->mlx);
+		xvar->mlx = NULL;
+	}
 }

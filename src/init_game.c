@@ -55,6 +55,14 @@ int ft_init_game(t_map *var, t_mlx **xvar)
 		return (ft_free_mlx(*xvar), ft_error_msg(ERR_MLX_IMG, var), 0);
 	(*xvar)->img.addr = mlx_get_data_addr((*xvar)->img.img, &(*xvar)->img.bpp,
 			&(*xvar)->img.size_line, &(*xvar)->img.endian);
+	(*xvar)->keys = calloc(6, sizeof(int));
+	(*xvar)->frame_count = 0;
+	(*xvar)->data->so.so = 1;
+	(*xvar)->data->no.so = 0;
+	(*xvar)->data->we.so = 0;
+	(*xvar)->data->ea.so = 0;
+	if (!(*xvar)->keys)
+		return (0);
 	ft_load_textures(*xvar);
 	return (1);
 }

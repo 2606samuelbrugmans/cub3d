@@ -76,6 +76,7 @@ static int	ft_parse_path(char *line, t_txtrs *txtr, t_map *var)
 	if (!txtr->path)
 		return (ft_free_3d(var), ft_error_malloc(), 0);
 	txtr->flag = 1;
+	
 	return (1);
 }
 

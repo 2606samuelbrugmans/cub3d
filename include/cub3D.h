@@ -23,8 +23,8 @@
 
 # define WIDTH 1000
 # define HEIGHT 900
-# define rotate_speed 0.05
-# define move_speed 0.1
+# define rotate_speed 0.008
+# define move_speed 0.01
 typedef struct s_txtrs
 {
 	char	*path;
@@ -37,6 +37,7 @@ typedef struct s_txtrs
 	int		bpp;
 	int		sl;
 	int		endian;
+	int		so;
 }			t_txtrs;
 
 typedef struct s_ray
@@ -108,6 +109,8 @@ typedef struct s_mlx
 {
 	void		*mlx;
 	void		*mlx_win;
+	int			*keys;
+	int 		frame_count;
 	t_player	player;
 	t_map		*data;
 	t_frame		img;
