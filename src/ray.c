@@ -1,6 +1,6 @@
 #include "../include/cub3D.h"
 
-void init_ray(t_ray *ray, t_player player)
+void	init_ray(t_ray *ray, t_player player)
 {
 	ray->fov = 66; 
 	ray->delta_dist_X = 0.0; 
@@ -27,32 +27,29 @@ void first_step_ray(t_ray *ray)
 	{
 		ray->stepx = -1;
 		ray->travel_x = (ray->start_x - ray->mapx) * ray->delta_dist_X;
-		if (ray->travel_x == 0)
-			ray->travel_x = 0.0001;
 	}
 	else
 	{
 		ray->stepx = 1;
 		ray->travel_x = (ray->mapx + 1.0 - ray->start_x) * ray->delta_dist_X;
-		if (ray->travel_x == 0)
-			ray->travel_x = 0.0001;
 	}
 
 	if (ray->diry < 0)
 	{
 		ray->stepy = -1;
 		ray->travel_y = (ray->start_y - ray->mapy) * ray->delta_dist_Y;
-		if (ray->travel_y == 0)
-			ray->travel_y = 0.0001;
 	}
 	else
 	{
 		ray->stepy = 1;
 		ray->travel_y = (ray->mapy + 1.0 - ray->start_y) * ray->delta_dist_Y;
-		if (ray->travel_y == 0)
-			ray->travel_y = 0.0001;
 	}
+	if (ray->travel_x == 0)
+		ray->travel_x = 0.0001;
+	if (ray->travel_y == 0)
+		ray->travel_y = 0.0001;
 }
+
 void prepare_ray(t_ray *ray, int i)
 {
 	double camerax;
@@ -83,30 +80,31 @@ void prepare_ray(t_ray *ray, int i)
 }
 void dda(t_ray *ray, char **map)
 {
-   while (!ray->hit)
-   {
-	   if (ray->travel_x < ray->travel_y)
-	   {
-		   ray->travel_x += ray->delta_dist_X;
-		   ray->mapx += ray->stepx;
-		   ray->side = 0;
-	   }
-	   else
-	   {
-		   ray->travel_y += ray->delta_dist_Y;
-		   ray->mapy += ray->stepy;
-		   ray->side = 1;
-	   }
-	   if (ray->mapx < 0 || ray->mapy < 0 || map[ray->mapy] == NULL)
-	   {
-		   ray->hit = 1;
-		   break;
-	   }
-	   if (map[ray->mapy][ray->mapx] != 'S' && 
-		   map[ray->mapy][ray->mapx] > '0')
-		   ray->hit = 1;
+	while (!ray->hit)
+	{
+		if (ray->travel_x < ray->travel_y)
+	   	{
+			ray->travel_x += ray->delta_dist_X;
+			ray->mapx += ray->stepx;
+			ray->side = 0;
+	   	}
+		else
+	   	{
+			ray->travel_y += ray->delta_dist_Y;
+			ray->mapy += ray->stepy;
+			ray->side = 1;
+		}
+		if (ray->mapx < 0 || ray->mapy < 0 || map[ray->mapy] == NULL)
+		{
+			ray->hit = 1;
+			break ;
+		}
+	   if (map[ray->mapy][ray->mapx] != 'S' &&
+				map[ray->mapy][ray->mapx] > '0')
+			ray->hit = 1;
 	}
 }
+
 void	draw_vertical_line(t_ray *ray)
 {
 	if (ray->side == 0)

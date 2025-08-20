@@ -1,4 +1,23 @@
 #include "../include/cub3D.h"
+
+void	update_ceilling(t_ray ray, t_mlx **xvar, int x)
+{
+	int	y;
+	int	color;
+
+	color = (*xvar)->data->c.rgb[0] * 65536
+		+ (*xvar)->data->c.rgb[1] * 256
+		+ (*xvar)->data->c.rgb[2];
+	y = ray.wall_top;
+	while (y < HEIGHT - 1)
+	{
+		*(unsigned int *)((*xvar)->img.addr
+				+ y * (*xvar)->img.size_line
+				+ x * ((*xvar)->img.bpp / 8)) = color;
+		y++;
+	}
+}
+
 void	update_floor_and_ceiling(t_ray ray, t_mlx **xvar, int x)
 {
 	int	y;
@@ -13,21 +32,11 @@ void	update_floor_and_ceiling(t_ray ray, t_mlx **xvar, int x)
 	while (y < ray.wall_bottom)
 	{
 		*(unsigned int *)((*xvar)->img.addr
-			+ y * (*xvar)->img.size_line
-			+ x * ((*xvar)->img.bpp / 8)) = color;
+				+ y * (*xvar)->img.size_line
+				+ x * ((*xvar)->img.bpp / 8)) = color;
 		y++;
 	}
-	color = (*xvar)->data->c.rgb[0] * 65536
-		+ (*xvar)->data->c.rgb[1] * 256
-		+ (*xvar)->data->c.rgb[2];
-	y = ray.wall_top;
-	while (y < HEIGHT - 1)
-	{
-		*(unsigned int *)((*xvar)->img.addr
-			+ y * (*xvar)->img.size_line
-			+ x * ((*xvar)->img.bpp / 8)) = color;
-		y++;
-	}
+	update_ceilling(ray, xvar, x);
 }
 
 void	pick_textrs(t_ray ray, int *tex)
@@ -61,7 +70,7 @@ void	update_texture(int x, t_ray ray, t_txtrs *tex, t_frame *frame)
 
 	tex_x = (int)(ray.wall * tex->width);
 	if (tex->so == 1)
-   		tex_x = tex->width - tex_x - 1;
+		tex_x = tex->width - tex_x - 1;
 	step = 1.0 * tex->height / ray.line_height;
 	tex_pos = (ray.wall_bottom - HEIGHT / 2 + ray.line_height / 2) * step;
 	y = ray.wall_bottom;

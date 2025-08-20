@@ -5,7 +5,7 @@ LIBFT = ./libft/libft.a
 MLX = ./mlx_linux/libmlx_Linux.a
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -O3 -g -fsanitize=address -lm
+CFLAGS = -Wall -Wextra -Werror -O3  -lm
 
 RM = rm -rf
 
